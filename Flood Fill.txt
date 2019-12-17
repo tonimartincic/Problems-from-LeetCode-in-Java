@@ -1,0 +1,49 @@
+class Solution {
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        boolean[][] visited = new boolean[image.length][image[0].length];
+        
+        return fill(image, sr, sc, image[sr][sc], newColor, visited);
+    }
+    
+    private int[][] fill(
+        int[][] image,
+        int row, 
+        int column, 
+        int startingColor, 
+        int newColor, 
+        boolean[][] visited) {
+        if (!isValid(row, column, image.length, image[0].length)) {
+            return image;
+        }
+        
+        if (visited[row][column]) {
+            return image;
+        }
+        
+        visited[row][column] = true;
+        
+        if (image[row][column] != startingColor) {
+            return image;
+        }
+        
+        image[row][column] = newColor;
+        
+        image = fill(image, row - 1, column, startingColor, newColor, visited);
+        image = fill(image, row + 1, column, startingColor, newColor, visited);
+        image = fill(image, row, column - 1, startingColor, newColor, visited);
+        image = fill(image, row, column + 1, startingColor, newColor, visited);
+        
+        return image;
+    }
+    
+    private boolean isValid(int row, int column, int numberOfRows, int numberOfColums) {
+        if (row < 0 
+            || row > numberOfRows - 1 
+            || column < 0 
+            || column > numberOfColums - 1) {
+            return false;
+        }
+        
+        return true;
+    } 
+}

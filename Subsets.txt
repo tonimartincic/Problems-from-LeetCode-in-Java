@@ -1,0 +1,30 @@
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> subsets = new LinkedList<>();
+        
+        if (nums.length == 0) {
+            subsets.add(new LinkedList<Integer>());
+            return subsets;
+        }
+        
+        int[] numsWithoutFirst = new int[nums.length - 1];
+        for (int i = 1; i < nums.length; i++) {
+            numsWithoutFirst[i - 1] = nums[i];
+        }
+        
+        List<List<Integer>> subsetsWithoutFirst = subsets(numsWithoutFirst);
+            
+        List<List<Integer>> subsetsWithFirst = new LinkedList<>();
+        for (List<Integer> subset : subsetsWithoutFirst) {
+            List<Integer> subsetWithFirst = new LinkedList<>(subset);
+            subsetWithFirst.add(0, nums[0]);
+            
+            subsetsWithFirst.add(subsetWithFirst);
+        }
+        
+        subsets.addAll(subsetsWithoutFirst);
+        subsets.addAll(subsetsWithFirst);
+        
+        return subsets;
+    }
+}
