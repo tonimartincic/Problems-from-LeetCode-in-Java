@@ -1,0 +1,21 @@
+class Solution {
+    public int subtractProductAndSum(int n) {
+        int product = 1;
+        int sum = 0;
+        
+        while(true) {
+            int currentDigit = n % 10;
+            
+            product *= currentDigit;
+            sum += currentDigit;
+            
+            if (n < 10) {
+                break;
+            }
+            
+            n /= 10;
+        }
+        
+        return product - sum;
+    }
+}
